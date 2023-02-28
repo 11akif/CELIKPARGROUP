@@ -10,11 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.save_button);
 
         TrackingCodeDbHelper dbHelper = new TrackingCodeDbHelper(this);
-
 
         db = dbHelper.getWritableDatabase();
 
@@ -103,37 +106,4 @@ public class MainActivity extends AppCompatActivity {
                                 if (dataArray.length() > 0) {
                                     String kargoDurumu = dataArray.getJSONObject(0).getString("status");
                                     SmsManager smsManager = SmsManager.getDefault();
-                                    smsManager.sendTextMessage(phoneNumber, null, kargoDurumu, null, null);
-
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(MainActivity.this, "Kargo durumu SMS olarak gönderildi!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                } else {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(MainActivity.this, "Hata oluştu! Kargo takip numarası yanlış olabilir.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            } else {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(MainActivity.this, "Hata oluştu! Kargo takip numarası yanlış olabilir.", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                });
-            }
-        });
-    }
-}
+                                    smsManager
